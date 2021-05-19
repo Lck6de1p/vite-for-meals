@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <img class="title" src="./assets/logo.png" alt="">
     <Ball v-for="ball in ballArr" :key="ball.name" :ball="ball"/>
     <span class="name" v-show="mealName">{{mealName}}</span>
     <div class="btn" @click="handleClick()">{{btnName}}</div>
@@ -37,6 +38,7 @@ function stop() {
   timerAdd.value = null
   timerClean.value = setTimeout(() => {
     ballArr.value = []
+    clearInterval(timerDel.value)
   }, 3000)
 }
 function start() {
@@ -75,6 +77,13 @@ function start() {
   height: 100vh;
   background-image: url(./assets/bg.jpg);
   overflow: hidden;
+  .title {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 270px;
+  }
   .name {
     font-size: 35px;
     color: #ff9732;
