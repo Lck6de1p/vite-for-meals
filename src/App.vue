@@ -4,11 +4,14 @@
     <Ball v-for="ball in ballArr" :key="ball.name" :ball="ball"/>
     <span class="name" v-show="mealName">{{mealName}}</span>
     <div class="btn" @click="handleClick()">{{btnName}}</div>
+    <div v-show="!timerAdd" @click="toggle" style="margin-top: 6px;">编辑菜单</div>
+    <Menu v-show="menuShow" :menu-list=mealArr @updateMenu=updateMenu />
   </div>
 </template>
 
 <script setup>
 import Ball from './components/Ball.vue'
+import Menu from './components/Menu.vue'
 import { ref, onMounted, computed } from 'vue'
 const mealArr = ref(["别吃别吃", "锟斤拷", "馄饨", "烩面", "热干面", "刀削面", "油泼面", "炸酱面", "炒面", "重庆小面", "米线", "酸辣粉", "土豆粉", "螺狮粉", "凉皮儿", "麻辣烫", "肉夹馍", "羊肉泡馍", "炒饭", "盖浇饭", "烤肉饭", "黄焖鸡米饭", "麻辣香锅", "火锅", "酸菜鱼", "烤串", "披萨", "烤鸭", "汉堡", "炸鸡", "寿司", "煎饼果子", "南瓜粥", "小龙虾", "牛排", "砂锅", "大排档", "馒头", "西餐", "自助餐", "小笼包", "水果", "西北风", "烧烤", "泡面", "水饺", "日本料理", "涮羊肉", "兰州拉面", "肯德基", "面包", "臊子面", "小笼包", "麦当劳", "沙县小吃", "烤鱼", "海鲜", "铁板烧", "韩国料理", "甜点", "鸭血粉丝汤"])
 const ballArr = ref([])
@@ -18,7 +21,7 @@ const timerDel = ref(null)
 const timerClean = ref(null)
 const clientHeight = ref(0)
 const clientWidth = ref(0)
-
+const menuShow = ref(false)
 const btnName = computed(() => {
   return timerAdd.value === null ? '开始' : '停止'
 })
@@ -59,7 +62,14 @@ function start() {
   setTimeout(() => {
     stop()
   }, 20000)
+}
 
+function toggle() {
+  menuShow.value = !menuShow.value
+}
+function updateMenu(menuArr) {
+  mealArr.value = menuArr
+  toggle()
 }
 </script>
 
