@@ -26,10 +26,11 @@ function handleSubmit() {
   if (str === '') {
     alert('你怕是要饿死自己！')
   }　else {
-    show.value = false
+    show.value = !show.value
     let arr = str.split(' ')
     setTimeout(() => {
       emit('updateMenu', arr)
+      show.value = !show.value
     }, 500);
   }
 }
